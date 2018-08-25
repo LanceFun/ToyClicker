@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Toy Clicker</title>
+  </head>
+  <body>
+    <div id="top">
+      <h2>Toy Clicker</h2>
+      <h2 id="toyCounter">0</h2>
+      <img src="images/toy.jpg" alt="Avatar" onclick="addToy()">
+      <br>
+    </div>
+
+    <section id="allOptions">
+      <button onclick="save()" class="option">Save</button>
+      <button onclick="load()" class="option">Load</button>
+      <button onclick="restart()" class="option">Restart</button>
+      <br><br>
+    </section>
+
+    <h3 id="toysPerSecond">You are gaining 0 Toys Per Second</h3>
+
+    <section id="allUpgrades">
+      <fieldset>
+        <legend>Multiplier</legend>
+        <div class="upgrade" id="multiplier">
+          <button onclick="mMultiplier.buy()" id="amountMultiplier">x2</button>
+          <span><p id="costMultiplier"> Toys</p></span>
+          <p id="currentMultiplier">Your Current Multiplier is x1</p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Click Upgrade</legend>
+        <div class="upgrade" id="click">
+          <button onclick="mClickUpgrade.buy()">Buy Click Upgrade</button>
+          <span><p id="costClick"> Toys</p></span>
+          <p id="amountClick">You Own 0 Click Upgrades</p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Auto Clicker</legend>
+        <div class="upgrade" id="autoClicker">
+          <button onclick="mAutoClicker.buy()">Buy Auto Clicker</button>
+          <span><p id="costAutoClicker"> Toys</p></span>
+          <p id="amountAutoClicker">You Own 0 Auto Clickers</p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Toy Shop</legend>
+        <div class="upgrade" id="toyShop">
+          <button onclick="mToyShop.buy()">Buy Toy Shop</button>
+          <span><p id="costToyShop"> Toys</p></span>
+          <p id="amountToyShop">You Own 0 Toy Shops</p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Toy Factory</legend>
+        <div class="upgrade" id="toyFactory">
+          <button onclick="mToyFactory.buy()">Buy Toy Factory</button>
+          <span><p id="costToyFactory"> Toys</p></span>
+          <p id="amountToyFactory">You Own 0 Toy Factories</p>
+        </div>
+      </fieldset>
+    </section>
+  </body>
+</html>
