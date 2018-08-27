@@ -1,9 +1,10 @@
 let toys = 0;
 
 class Upgrade {
-  constructor(startingCost, amount) {
+  constructor(startingCost, amount, display) {
     this._startingCost = startingCost;
     this._amount = amount;
+    this._display = display;
     this._startingAmount = amount;
   }
   getCost() {
@@ -19,6 +20,14 @@ class Upgrade {
   reset() {
     this._amount = this._startingAmount;
   }
+  render() {
+    if(this._amount == 1){
+        document.getElementById(this._display.amount).innerHTML = `You Own ${this._amount} ${this._display.name[0]}`;
+    } else {
+        document.getElementById(this._display.amount).innerHTML = `You Own ${this._amount} ${this._display.name[1]}`;
+    }
+    document.getElementById(this._display.cost).innerHTML = this.getCost() + " Toys";
+  }
   set amount (amount) { this._amount = amount }
   get amount ()       { return this._amount   }
 }
@@ -26,8 +35,31 @@ class Upgrade {
 let mMultiplier = new Upgrade(100, 1);
 let mClickUpgrade = new Upgrade(20, 1);
 let mAutoClicker = new Upgrade(12, 0);
-let mToyShop = new Upgrade(50, 0);
-let mToyFactory = new Upgrade(1000, 0);
+let mToyShop = new Upgrade(50, 0, {
+    "amount": "amountToyShop",
+    "cost": "costToyShop",
+    "name": [
+        "Toy Shop",
+        "Toy Shops"
+    ]
+});
+let mToyFactory = new Upgrade(1000, 0, {
+    "amount": "amountToyFactory",
+    "cost": "costToyFactory",
+    "name": [
+        "Toy Factory",
+        "Toy Factories"
+    ]
+});
+
+let mHiddenToyLayer = new Upgrade(5000, 0, {
+    "amount": "amountHiddenToyLayer",
+    "cost": "costHiddenToyLayer",
+    "name": [
+        "Hidden Toy Layer",
+        "Hidden Toy Layers"
+    ]
+});
 
 let lockedUpgrades = [
   mMultiplier,
@@ -36,7 +68,6 @@ let lockedUpgrades = [
   mToyShop,
   mToyFactory
 ]
-
 
 window.onbeforeunload = save;
 window.onload = load;
@@ -57,17 +88,16 @@ function update() {
   document.getElementById("amountMultiplier").innerHTML = "x" + (mMultiplier.amount+1);
   document.getElementById("currentMultiplier").innerHTML = `Your Current Multiplier is x${mMultiplier.amount}`;
 
-  document.getElementById("amountToyShop").innerHTML = `You Own ${mToyShop.amount} Toy Shops`;
-  document.getElementById("costToyShop").innerHTML = mToyShop.getCost() + " Toys";
-
-  document.getElementById("amountToyFactory").innerHTML = `You Own ${mToyFactory.amount} Toy Factories`;
-  document.getElementById("costToyFactory").innerHTML = mToyFactory.getCost() + " Toys";
+  mToyShop.render();
+  mToyFactory.render();
+  mHiddenToyLayer.render();
 }
 
 function timer() {
   toys += mAutoClicker.amount*mMultiplier.amount;
   toys += (mToyShop.amount*2)*mMultiplier.amount;
   toys += (mToyFactory.amount*3)*mMultiplier.amount;
+  toys += (mHiddenToyLayer.amount*4)*mMultiplier.amount;
   update();
 }
 
@@ -88,6 +118,7 @@ function save() {
   localStorage.setItem("multiplier", mMultiplier.amount);
   localStorage.setItem("toyShop", mToyShop.amount);
   localStorage.setItem("toyFactory", mToyFactory.amount);
+  localStorage.setItem("hiddenToyLayer", mHiddenToyLayer.amount);
 }
 
 //Loads data from localStorage and updates counters
@@ -98,6 +129,7 @@ function load() {
   mMultiplier.amount = parseInt(localStorage.getItem("multiplier"));
   mToyShop.amount = parseInt(localStorage.getItem("toyShop"));
   mToyFactory.amount = parseInt(localStorage.getItem("toyFactory"));
+  mHiddenToyLayer.amount = parseInt(localStorage.getItem("hiddenToyLayer"));
   update();
 }
 
@@ -109,6 +141,7 @@ function restart() {
   mMultiplier.reset();
   mToyShop.reset();
   mToyFactory.reset();
+  mHiddenToyLayer.reset();
   localStorage.clear();
   update();
 }
